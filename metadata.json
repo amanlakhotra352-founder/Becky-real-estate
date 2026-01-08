@@ -1,0 +1,7 @@
+{
+  "name": "Indiana Real Estate Inc. - Becky Maldeney",
+  "description": "An ultra-luxury, conversion-optimized real estate platform for Becky Maldeney, serving Auburn, Indiana and DeKalb County.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

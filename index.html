@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Becky Maldeney | Auburn Luxury Real Estate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        noir: '#0A0A0A',
+                        ivory: '#FAF9F6',
+                        gold: '#C5A059',
+                        slate: '#2D3436',
+                        sage: '#E3EAD3',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Outfit', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'reveal': 'reveal 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards',
+                        'pulse-glow': 'pulse-glow 2.5s infinite',
+                        'marquee': 'marquee 40s linear infinite',
+                        'shimmer': 'shimmer 2s infinite linear',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        reveal: {
+                            '0%': { transform: 'translateY(110%)', opacity: 0 },
+                            '20%': { opacity: 0 },
+                            '100%': { transform: 'translateY(0)', opacity: 1 },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { boxShadow: '0 0 0 0 rgba(197, 160, 89, 0.4)' },
+                            '50%': { boxShadow: '0 0 30px 10px rgba(197, 160, 89, 0.2)' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root { scroll-behavior: smooth; }
+        body { 
+            background-color: #FAF9F6; 
+            color: #0A0A0A;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            font-feature-settings: "kern", "liga", "clig", "calt";
+        }
+
+        .text-reveal-container {
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: bottom;
+            padding-bottom: 0.15em;
+        }
+
+        .luxury-text-shadow {
+            text-shadow: 0 4px 15px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .gold-shimmer {
+            background: linear-gradient(90deg, #C5A059 25%, #E5C78D 50%, #C5A059 75%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s infinite linear;
+        }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #0A0A0A; }
+        ::-webkit-scrollbar-thumb { background: #C5A059; border-radius: 10px; }
+
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.35.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
