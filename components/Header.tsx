@@ -1,93 +1,71 @@
 
-import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight, ChevronLeft, Phone, Mail } from 'lucide-react';
-import { AGENT_INFO } from '../constants';
+import React, { useState, useEffect, memo } from 'react';
+import { Menu, X, Phone } from 'lucide-react';
+import { AGENT_INFO, NAV_LINKS, UI_CONFIG } from '../constants';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  onNavigate: (id: string) => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > UI_CONFIG.SCROLL_THRESHOLD);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
     if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.classList.add('body-lock');
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.classList.remove('body-lock');
     }
   }, [isMenuOpen]);
 
-  const navLinks = [
-    { name: 'Portfolio', id: 'listings' },
-    { name: 'Districts', id: 'neighborhoods' },
-    { name: 'Becky', id: 'about' },
-    { name: 'Location', id: 'location' },
-    { name: 'Contact', id: 'contact' },
-  ];
-
-  const scrollToSection = (id: string) => {
-    // CRITICAL: Ensure menu closes first to remove the overlay
+  const handleNavClick = (id: string) => {
     setIsMenuOpen(false);
-    
-    // Slight delay to allow the state change to propagate and re-enable pointer events
-    setTimeout(() => {
-      const el = document.getElementById(id);
-      if (el) {
-        const offset = 100; // Generous offset for fixed header
-        const bodyRect = document.body.getBoundingClientRect().top;
-        const elementRect = el.getBoundingClientRect().top;
-        const elementPosition = elementRect - bodyRect;
-        const offsetPosition = elementPosition - offset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      }
-    }, 50);
+    onNavigate(id);
   };
 
   return (
     <>
-      <div className="fixed top-0 left-0 w-full z-[100] p-4 md:p-6 pointer-events-none">
-        <header className={`mx-auto max-w-6xl w-full transition-all duration-700 pointer-events-auto rounded-[1.5rem] md:rounded-[2.5rem] border px-4 py-2 flex items-center justify-between ${
+      <header 
+        role="banner"
+        className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 border-b ${
           isScrolled 
-          ? 'bg-noir/90 backdrop-blur-xl border-white/10 shadow-2xl py-3 mt-1' 
-          : 'bg-noir/20 backdrop-blur-md border-white/10 mt-2 md:mt-4'
-        }`}>
-          {/* Brand / Logo */}
+            ? 'bg-white/95 backdrop-blur-md border-noir/5 py-3 shadow-sm' 
+            : 'bg-transparent border-white/10 py-5 md:py-6'
+        }`}
+      >
+        <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
+          {/* Brand Identity */}
           <button 
-            onClick={() => {
-              setIsMenuOpen(false);
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }} 
-            className="flex items-center space-x-2 md:space-x-4 px-1 md:px-2 group text-left pointer-events-auto"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex items-center space-x-3 group"
+            aria-label="Indiana Real Estate Home"
           >
-            <div className={`w-9 h-9 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-500 shadow-lg ${isScrolled ? 'bg-gold' : 'bg-white'}`}>
-              <span className="text-noir font-black text-xs md:text-sm tracking-tighter">BM</span>
+            <div className={`font-serif text-xl md:text-3xl font-black tracking-tighter transition-colors ${isScrolled ? 'text-noir' : 'text-white'}`}>
+              BM<span className="text-gold">.</span>
             </div>
-            <div className="flex flex-col">
-              <span className="text-[11px] md:text-sm font-bold tracking-[0.25em] transition-colors luxury-text-shadow text-white">
-                BECKY MALDENEY
-              </span>
-              <span className={`text-[7px] md:text-[9px] uppercase tracking-[0.4em] font-medium transition-colors ${isScrolled ? 'text-white/50' : 'text-white/70'}`}>
-                Elite Properties
-              </span>
+            <div className="hidden xs:flex flex-col border-l border-current pl-3">
+               <span className={`text-[10px] font-bold tracking-[0.3em] uppercase transition-colors ${isScrolled ? 'text-noir' : 'text-white'}`}>BECKY MALDENEY</span>
+               <span className="text-[7px] font-medium tracking-[0.4em] text-gold uppercase">Elite Representation</span>
             </div>
           </button>
 
-          {/* Desktop Links */}
-          <nav className="hidden lg:flex items-center space-x-2">
-            {navLinks.map((link) => (
+          {/* Navigation Registry */}
+          <nav role="navigation" className="hidden lg:flex items-center space-x-10">
+            {NAV_LINKS.map((link) => (
               <button 
-                key={link.name} 
-                onClick={() => scrollToSection(link.id)}
-                className={`px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${
-                  isScrolled ? 'text-white/80 hover:bg-white/10 hover:text-gold' : 'text-white hover:bg-white/10 hover:text-gold'
+                key={link.id} 
+                onClick={() => handleNavClick(link.id)}
+                className={`text-[11px] font-bold uppercase tracking-[0.3em] transition-all hover:text-gold ${
+                  isScrolled ? 'text-noir/60' : 'text-white/80'
                 }`}
               >
                 {link.name}
@@ -95,79 +73,76 @@ const Header: React.FC = () => {
             ))}
           </nav>
 
-          {/* Actions */}
-          <div className="flex items-center space-x-2">
-             <button 
-              onClick={() => scrollToSection('contact')}
-              className="hidden sm:flex items-center space-x-3 bg-gold text-noir px-6 py-3 rounded-full font-bold text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-[0_10px_30px_rgba(197,160,89,0.3)]"
+          {/* Global Controls */}
+          <div className="flex items-center space-x-4 md:space-x-8">
+            <button 
+              onClick={() => onNavigate('contact')}
+              className={`hidden sm:flex items-center space-x-2 text-[10px] font-black uppercase tracking-[0.2em] px-6 py-3 rounded-sm transition-all ${
+                isScrolled 
+                  ? 'bg-noir text-white hover:bg-gold hover:text-noir' 
+                  : 'bg-white text-noir hover:bg-gold'
+              }`}
             >
-              <span>Consult Now</span>
-              <ArrowUpRight className="w-3 h-3" />
+              <span>Secure Entry</span>
             </button>
+
             <button 
               onClick={() => setIsMenuOpen(true)}
-              className={`p-3 md:p-4 rounded-full lg:hidden flex items-center justify-center transition-all ${isScrolled ? 'bg-white/10 text-white' : 'bg-white/20 text-white shadow-xl'}`}
+              className={`transition-colors p-2 ${isScrolled ? 'text-noir' : 'text-white'}`}
               aria-label="Open Navigation Menu"
+              aria-expanded={isMenuOpen}
             >
-              <Menu size={20} />
+              <Menu size={24} />
             </button>
           </div>
-        </header>
-      </div>
+        </div>
+      </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Persistent Full-Screen Navigation Overlay - Decoupled from Header Flow */}
       <div 
-        className={`fixed inset-0 bg-noir text-white transition-all duration-500 transform ${
-          isMenuOpen ? 'translate-x-0 opacity-100 z-[200]' : 'translate-x-full opacity-0 z-[-1] pointer-events-none'
+        aria-hidden={!isMenuOpen}
+        className={`fixed inset-0 w-full h-full bg-noir transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] transform z-[1000] ${
+          isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'
         }`}
       >
-        <div className="absolute top-0 left-0 w-full p-6 md:p-10 flex justify-between items-center">
+        {/* Overlay Header */}
+        <div className="w-full px-6 py-8 md:px-12 flex justify-between items-center bg-noir">
+           <div className="font-serif text-3xl font-black text-white">BM<span className="text-gold">.</span></div>
            <button 
-            onClick={() => setIsMenuOpen(false)}
-            className="flex items-center space-x-3 text-white/40 hover:text-gold transition-all"
+            onClick={() => setIsMenuOpen(false)} 
+            className="text-white p-3 hover:rotate-90 transition-transform active:scale-75"
+            aria-label="Close Navigation Menu"
            >
-              <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center transition-colors">
-                <ChevronLeft className="w-5 h-5" />
-              </div>
-              <span className="text-[10px] uppercase tracking-[0.5em] font-bold">Return</span>
+            <X size={32} />
            </button>
-           
-           <button 
-            onClick={() => setIsMenuOpen(false)}
-            className="w-14 h-14 rounded-full bg-gold text-noir flex items-center justify-center border border-gold/20 shadow-2xl"
-            aria-label="Close Menu"
-          >
-            <X size={28} />
-          </button>
         </div>
-
-        <div className="flex flex-col h-full justify-center items-center space-y-12 p-10">
-          <nav className="flex flex-col items-center space-y-8">
-            {navLinks.map((link) => (
+        
+        {/* Navigation Content */}
+        <div className="flex flex-col items-center justify-center h-[calc(100vh-100px)] space-y-8 md:space-y-12 px-6 overflow-y-auto">
+          <div className="flex flex-col items-center space-y-6 md:space-y-10">
+            {NAV_LINKS.map((link) => (
               <button 
-                key={link.name} 
-                onClick={() => scrollToSection(link.id)}
-                className="text-5xl sm:text-7xl font-serif hover:text-gold transition-all tracking-tighter text-center"
+                key={link.id} 
+                onClick={() => handleNavClick(link.id)}
+                className="text-4xl xs:text-5xl md:text-8xl font-serif text-white hover:text-gold transition-all tracking-tighter group flex items-center"
               >
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity text-gold text-2xl mr-4 md:mr-8 hidden xs:inline">/</span>
                 {link.name}
               </button>
             ))}
-          </nav>
+          </div>
           
-          <div className="pt-12 w-full max-w-sm text-center border-t border-white/5 space-y-8">
-            <div className="space-y-4">
-              <p className="text-gold uppercase tracking-[0.4em] text-[10px] font-bold">Private Concierge Line</p>
-              <div className="flex flex-col items-center space-y-3">
-                <a href={`tel:${AGENT_INFO.phone}`} className="flex items-center space-x-2 text-2xl font-serif hover:text-gold transition-colors">
-                  <Phone size={18} className="text-gold" />
-                  <span>{AGENT_INFO.phone}</span>
-                </a>
-                <a href={`mailto:${AGENT_INFO.email}`} className="flex items-center space-x-2 text-white/40 text-xs tracking-widest hover:text-gold transition-colors">
-                  <Mail size={14} className="text-gold" />
-                  <span>{AGENT_INFO.email}</span>
-                </a>
-              </div>
-            </div>
+          <div className="w-full max-w-sm pt-8 md:pt-12 mt-4 md:mt-12 border-t border-white/5 space-y-6 md:space-y-8 pb-12">
+             <a href={`tel:${AGENT_INFO.phone}`} className="flex items-center justify-center space-x-4 text-gold text-[11px] font-black uppercase tracking-[0.4em] group active:scale-95 transition-transform">
+               <Phone size={18} className="group-hover:rotate-12 transition-transform" />
+               <span>Concierge Hotline</span>
+             </a>
+             <button 
+              onClick={() => handleNavClick('contact')}
+              className="w-full bg-gold text-noir py-5 md:py-7 text-[10px] md:text-[11px] font-black uppercase tracking-[0.6em] rounded-sm hover:bg-white transition-all shadow-[0_20px_40px_rgba(0,0,0,0.4)] active:scale-[0.98]"
+             >
+               Request Private Brief
+             </button>
           </div>
         </div>
       </div>
@@ -175,4 +150,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

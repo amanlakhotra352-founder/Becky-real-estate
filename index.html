@@ -3,17 +3,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Becky Maldeney | Auburn Luxury Real Estate</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Becky Maldeney | Auburn Luxury Real Estate | Indiana Real Estate Inc.</title>
+    <meta name="description" content="Auburn's premier luxury real estate broker. Becky Maldeney specializes in DeKalb County's most exclusive estates, golf course villas, and legacy properties.">
+    <meta name="keywords" content="Auburn Indiana Real Estate, Luxury Homes DeKalb County, Becky Maldeney, Bridgewater Golf Community, Indiana Luxury Homes">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://beckymaldeney.com/">
+    <meta property="og:title" content="Becky Maldeney | Auburn Luxury Real Estate">
+    <meta property="og:description" content="Curating legacies through exclusive real estate representation in Auburn, Indiana.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1600607687940-4e7a5235d481?auto=format&fit=crop&q=80&w=1200">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        noir: '#0A0A0A',
-                        ivory: '#FAF9F6',
+                        noir: '#0F0F0F',
+                        ivory: '#F9F8F3',
                         gold: '#C5A059',
                         slate: '#2D3436',
                         sage: '#E3EAD3',
@@ -36,13 +46,12 @@
                             '50%': { transform: 'translateY(-20px)' },
                         },
                         reveal: {
-                            '0%': { transform: 'translateY(110%)', opacity: 0 },
-                            '20%': { opacity: 0 },
+                            '0%': { transform: 'translateY(40px)', opacity: 0 },
                             '100%': { transform: 'translateY(0)', opacity: 1 },
                         },
                         'pulse-glow': {
                             '0%, 100%': { boxShadow: '0 0 0 0 rgba(197, 160, 89, 0.4)' },
-                            '50%': { boxShadow: '0 0 30px 10px rgba(197, 160, 89, 0.2)' },
+                            '50%': { boxShadow: '0 0 40px 15px rgba(197, 160, 89, 0.25)' },
                         },
                         marquee: {
                             '0%': { transform: 'translateX(0%)' },
@@ -60,43 +69,56 @@
     <style>
         :root { scroll-behavior: smooth; }
         body { 
-            background-color: #FAF9F6; 
-            color: #0A0A0A;
+            background-color: #F9F8F3; 
+            color: #0F0F0F;
             overflow-x: hidden;
-            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             font-feature-settings: "kern", "liga", "clig", "calt";
         }
 
-        .text-reveal-container {
-            overflow: hidden;
-            display: inline-block;
-            vertical-align: bottom;
-            padding-bottom: 0.15em;
+        /* Luxury Noise Texture Overlay - Adjusted Z-Index */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.04;
+            z-index: 1; /* Moved behind interactive elements */
+            pointer-events: none;
+            background-image: url('https://grainy-gradients.vercel.app/noise.svg');
         }
 
         .luxury-text-shadow {
-            text-shadow: 0 4px 15px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
         .gold-shimmer {
-            background: linear-gradient(90deg, #C5A059 25%, #E5C78D 50%, #C5A059 75%);
+            background: linear-gradient(90deg, #C5A059 25%, #EEDC9A 50%, #C5A059 75%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shimmer 4s infinite linear;
+            animation: shimmer 5s infinite linear;
         }
 
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #0A0A0A; }
-        ::-webkit-scrollbar-thumb { background: #C5A059; border-radius: 10px; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0F0F0F; }
+        ::-webkit-scrollbar-thumb { background: #C5A059; }
 
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .text-balance { text-wrap: balance; }
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus {
+            -webkit-text-fill-color: #fff;
+            -webkit-box-shadow: 0 0 0px 1000px #0F0F0F inset;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        .body-lock {
+            overflow: hidden !important;
         }
     </style>
 <script type="importmap">

@@ -1,108 +1,120 @@
 
-import React from 'react';
-import { Instagram, ArrowUpRight, MapPin } from 'lucide-react';
+import React, { useEffect, useState, memo } from 'react';
+import { ChevronDown, Search } from 'lucide-react';
+import { HERO_IMAGES, UI_CONFIG } from '../constants';
 
-const Hero: React.FC = () => {
-  const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = el.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
+interface HeroProps {
+  onSearch: () => void;
+}
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
+const Hero: React.FC<HeroProps> = ({ onSearch }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      window.requestAnimationFrame(() => {
+        document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
       });
-    }
-  };
+    };
+
+    const slideTimer = setInterval(() => {
+      setCurrentIndex(prev => (prev + 1) % HERO_IMAGES.length);
+    }, UI_CONFIG.SLIDESHOW_INTERVAL);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearInterval(slideTimer);
+    };
+  }, []);
 
   return (
-    <section className="relative h-screen min-h-[750px] w-full flex items-center justify-center overflow-hidden bg-noir">
-      {/* Immersive Background */}
+    <section className="relative h-[90vh] md:h-screen min-h-[600px] w-full flex items-center overflow-hidden bg-noir">
+      {/* Background Pipeline */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=90&w=2400" 
-          alt="Luxury Auburn Estate" 
-          className="w-full h-full object-cover opacity-60 scale-105 animate-[pulse_30s_ease-in-out_infinite]"
-          loading="eager"
-        />
-        {/* Multilayered Gradient for Text Legibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/30 to-noir/70"></div>
-        <div className="absolute inset-0 bg-noir/20"></div>
+        {HERO_IMAGES.map((img, index) => (
+          <div 
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-[2000ms] ease-in-out ${
+              index === currentIndex ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <img 
+              src={img} 
+              alt={`Luxury Portfolio ${index + 1}`} 
+              className={`w-full h-full object-cover transition-transform duration-[10000ms] ease-out ${
+                index === currentIndex ? 'scale-110' : 'scale-105'
+              }`}
+              style={{
+                transform: `translateY(calc(var(--scroll-y, 0) * 0.08px)) ${index === currentIndex ? 'scale(1.1)' : 'scale(1.05)'}`,
+                willChange: 'transform, opacity'
+              }}
+              loading={index === 0 ? "eager" : "lazy"}
+            />
+          </div>
+        ))}
+        
+        {/* Editorial Lighting Masks - Heavier on mobile for text protection */}
+        <div className="absolute inset-0 bg-gradient-to-r from-noir/80 via-noir/30 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-noir/80 via-transparent to-transparent"></div>
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 text-center pt-24 md:pt-32 pb-20">
-        <div className="flex flex-col items-center space-y-12 md:space-y-20">
-          {/* Top Label */}
-          <div className="flex flex-col items-center space-y-6">
-             <div className="flex items-center space-x-3 text-gold animate-float">
-                <MapPin size={20} className="fill-gold/20" />
-                <span className="text-[12px] md:text-[14px] uppercase tracking-[0.5em] md:tracking-[0.7em] font-black luxury-text-shadow">Auburn • Indiana</span>
-             </div>
-             <div className="w-[1.5px] h-12 md:h-24 bg-gradient-to-b from-gold to-transparent"></div>
-          </div>
-          
-          {/* Headline - Responsive & High Visibility */}
-          <div className="max-w-6xl mx-auto">
-            <h1 className="text-[10vw] sm:text-7xl md:text-[7.5vw] font-serif text-white leading-[1.1] md:leading-[1.0] tracking-tighter luxury-text-shadow">
-              <span className="inline-block animate-reveal font-black">Curating Your</span>
-              <span className="block md:inline-block md:ml-8 animate-reveal delay-150 text-gold italic font-black gold-shimmer">Legacy Home</span>
-              <div className="block mt-6 md:mt-10">
-                <span className="block animate-reveal delay-300 text-[3.5vw] sm:text-xl md:text-[2.2vw] font-sans font-black tracking-[0.4em] md:tracking-[0.6em] text-white uppercase leading-normal luxury-text-shadow">
-                  AUBURN'S PREMIER COLLECTION
-                </span>
-              </div>
-            </h1>
-          </div>
-          
-          {/* Subtext and Action Hub */}
-          <div className="flex flex-col items-center justify-center gap-12 md:gap-16">
-            <p className="text-white/90 font-medium max-w-2xl text-center leading-relaxed text-base md:text-2xl animate-reveal delay-500 luxury-text-shadow italic font-serif px-6">
-              Exclusive representation for DeKalb County's most significant architectural achievements and private estates.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-10 md:gap-14 animate-reveal delay-700 w-full">
-              <button 
-                onClick={() => scrollToSection('contact')} 
-                className="group relative flex items-center justify-center space-x-4 md:space-x-6 bg-gold text-noir px-10 md:px-16 py-5 md:py-7 rounded-full font-black text-[11px] md:text-sm uppercase tracking-[0.2em] md:tracking-[0.3em] hover:bg-white hover:scale-105 transition-all duration-500 shadow-[0_25px_60px_rgba(197,160,89,0.5)] animate-pulse-glow"
-              >
-                <span>Book Private Tour</span>
-                <div className="bg-noir text-white p-2.5 rounded-full group-hover:rotate-45 transition-transform duration-500">
-                  <ArrowUpRight size={18} />
-                </div>
-              </button>
-              
-              <button 
-                onClick={() => scrollToSection('listings')}
-                className="text-white hover:text-gold text-[12px] md:text-sm uppercase tracking-[0.4em] md:tracking-[0.6em] font-black transition-all border-b-2 md:border-b-[3px] border-white/30 hover:border-gold pb-2 md:pb-3 luxury-text-shadow"
-              >
-                Browse Portfolio
-              </button>
+      {/* Content Layer */}
+      <div className="relative z-10 container mx-auto px-6 md:px-12 lg:px-20 h-full flex flex-col justify-end pb-40 md:pb-48">
+        <div className="max-w-3xl animate-reveal">
+          <div className="space-y-5 md:space-y-8">
+            <div className="flex items-center space-x-4 md:space-x-6">
+               <div className="w-8 md:w-12 h-px bg-gold/50"></div>
+               <p className="text-white/80 text-[9px] md:text-[11px] uppercase tracking-[0.6em] font-black luxury-text-shadow">
+                 Indiana Real Estate Inc.
+               </p>
             </div>
+            
+            <h1 className="text-white text-4xl sm:text-7xl md:text-8xl font-serif italic tracking-tighter leading-[1.1] md:leading-none font-bold luxury-text-shadow">
+              Define Your <br className="hidden xs:block" />
+              <span className="text-gold gold-shimmer not-italic font-black">Legacy.</span>
+            </h1>
+            
+            <p className="text-white/70 font-serif italic text-base md:text-2xl max-w-sm md:max-w-md leading-relaxed luxury-text-shadow">
+              Bespoke representation for Auburn’s most significant architectural achievements.
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Decorative Side Elements - Hidden on mobile */}
-      <div className="absolute bottom-20 left-12 hidden xl:flex flex-col space-y-12 text-white items-center z-20">
-        <a href="#" className="hover:text-gold transition-all hover:-translate-y-2"><Instagram size={24} /></a>
-        <div className="w-[1.5px] h-20 bg-gradient-to-t from-white/40 to-transparent"></div>
-        <p className="vertical-text text-[10px] uppercase tracking-[0.6em] font-black opacity-60 luxury-text-shadow [writing-mode:vertical-lr] rotate-180">Becky Maldeney</p>
-      </div>
-
-      {/* Discover Progress Bar */}
-      <div className="absolute bottom-20 right-12 hidden md:flex flex-col items-end text-white z-20">
-        <span className="text-[11px] font-sans tracking-[0.5em] mb-4 font-black uppercase opacity-90 luxury-text-shadow">Explore</span>
-        <div className="w-32 h-[4px] bg-white/10 relative overflow-hidden rounded-full border border-white/5">
-          <div className="absolute left-0 top-0 h-full w-full bg-gold -translate-x-full animate-[reveal_4s_infinite] ease-in-out"></div>
+      {/* Filter Pipeline - Optimized for mobile touch & layout */}
+      <div className="absolute bottom-0 left-0 w-full z-20 px-4 md:px-12 pb-6 md:pb-12">
+        <div className="container mx-auto max-w-5xl">
+           <div className="bg-noir/60 backdrop-blur-3xl p-1.5 shadow-3xl flex flex-col md:flex-row items-stretch md:items-center rounded-sm border border-white/10">
+              <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-0">
+                 <FilterDropdown label="District" value="Bridgewater" />
+                 <FilterDropdown label="Assets" value="Golf Villas" />
+                 <FilterDropdown label="Specs" value="4+ Suites" />
+                 <FilterDropdown label="Value" value="$1.2M+" />
+              </div>
+              <button 
+                onClick={onSearch}
+                className="bg-white text-noir px-8 md:px-12 py-4 md:py-5 text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] hover:bg-gold transition-all mt-1.5 md:mt-0 flex items-center justify-center space-x-3 group rounded-sm active:scale-[0.98]"
+              >
+                 <Search size={14} className="group-hover:scale-110 transition-transform" />
+                 <span>Explore</span>
+              </button>
+           </div>
         </div>
       </div>
     </section>
   );
 };
 
-export default Hero;
+const FilterDropdown = memo(({ label, value }: { label: string, value: string }) => (
+  <div className="relative group px-4 md:px-6 py-3.5 md:py-4 border-r border-white/5 last:border-none cursor-pointer hover:bg-white/5 active:bg-white/10 transition-colors">
+    <p className="text-[6px] md:text-[7px] uppercase tracking-[0.4em] text-white/30 font-black mb-1">{label}</p>
+    <div className="flex items-center justify-between">
+      <span className="text-[9px] md:text-[10px] font-bold text-white uppercase tracking-widest truncate">{value}</span>
+      <ChevronDown size={10} className="text-gold opacity-50 group-hover:opacity-100 transition-opacity ml-1.5" />
+    </div>
+  </div>
+));
+
+export default memo(Hero);
