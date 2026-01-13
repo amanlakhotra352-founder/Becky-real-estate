@@ -1,6 +1,6 @@
 
-import React, { memo } from 'react';
-import { ArrowUpRight, Bed, Bath, Maximize, Search } from 'lucide-react';
+import React, { memo, useState } from 'react';
+import { ArrowUpRight, Bed, Bath, Maximize, Search, Home } from 'lucide-react';
 import { Property } from '../types';
 
 interface PropertyCardProps {
@@ -9,6 +9,8 @@ interface PropertyCardProps {
 }
 
 const PropertyCard: React.FC<PropertyCardProps> = ({ property, onOpen }) => {
+  const [imageError, setImageError] = useState(false);
+
   return (
     <div 
       className="group relative bg-white flex flex-col h-full border border-noir/5 hover:border-gold/40 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] rounded-sm overflow-hidden cursor-pointer shadow-sm hover:shadow-3xl"
@@ -22,13 +24,21 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onOpen }) => {
       </div>
 
       {/* Image Container */}
-      <div className="relative aspect-[4/5] overflow-hidden bg-noir/5">
-        <img 
-          src={property.imageUrl} 
-          alt={property.title} 
-          className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out"
-          loading="lazy"
-        />
+      <div className="relative aspect-[4/5] overflow-hidden bg-noir/10">
+        {!imageError ? (
+          <img 
+            src={property.imageUrl} 
+            alt={property.title} 
+            onError={() => setImageError(true)}
+            className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out"
+            loading="lazy"
+          />
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center bg-noir/5 text-noir/20">
+            <Home size={48} strokeWidth={1} />
+            <p className="mt-4 text-[10px] font-black uppercase tracking-widest">Image Unavailable</p>
+          </div>
+        )}
         
         <div className="absolute inset-0 bg-gradient-to-t from-noir/95 via-noir/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
         

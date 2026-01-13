@@ -26,10 +26,9 @@ export const NAV_LINKS = [
 ];
 
 export const HERO_IMAGES = [
+  "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=90&w=2000",
   "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&q=90&w=2000",
-  "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=90&w=2000",
-  "https://images.unsplash.com/photo-1600607687940-4e7a5235d481?auto=format&fit=crop&q=90&w=2000",
-  "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=90&w=2000"
+  "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=90&w=2000"
 ];
 
 export const MOCK_PROPERTIES: Property[] = [
@@ -86,7 +85,7 @@ export const MOCK_PROPERTIES: Property[] = [
     baths: 4,
     sqft: 4200,
     neighborhood: "Greyson Heights",
-    imageUrl: "https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?auto=format&fit=crop&q=80&w=800",
+    imageUrl: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&q=80&w=1200",
     status: 'Pending',
     description: "High-design meets family comfort in this stunning contemporary home situated in Auburn's most sought-after new development.",
     features: ["Floor-to-Ceiling Windows", "Designer Fixtures", "Outdoor Kitchen", "Basement Bar"]

@@ -15,7 +15,6 @@ const App: React.FC = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Monitor Scroll Progress for UI enrichment
   useEffect(() => {
     const updateProgress = () => {
       const scrolled = window.scrollY;
@@ -55,7 +54,6 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-ivory font-body selection:bg-gold selection:text-noir overflow-x-hidden">
-      {/* Scroll Progress Bar - Elite UI Detail */}
       <div className="fixed top-0 left-0 h-[2px] bg-gold z-[1000] transition-all duration-150" style={{ width: `${scrollProgress}%` }} />
 
       <Header onNavigate={scrollToSection} />
@@ -63,44 +61,44 @@ const App: React.FC = () => {
       <main className="relative">
         <Hero onSearch={() => scrollToSection('listings')} />
 
-        {/* Philosophy Section */}
+        {/* Philosophy Section - Balanced Typography */}
         <section 
           id="philosophy" 
           role="region" 
           aria-labelledby="philosophy-title"
-          className="relative z-10 border-b border-noir/5 bg-white py-24 md:py-48"
+          className="relative z-10 border-b border-noir/5 bg-white py-20 md:py-48"
         >
           <div className="container mx-auto px-6">
-            <div className="mx-auto max-w-6xl space-y-12 text-center md:space-y-20">
-               <div className="flex flex-col items-center space-y-8">
-                  <div className="h-20 w-[1px] bg-gold/40"></div>
-                  <h2 id="philosophy-title" className="font-black text-[12px] uppercase tracking-[0.7em] text-noir/40 md:text-[14px]">The Philosophy</h2>
+            <div className="mx-auto max-w-6xl space-y-10 md:space-y-20 text-center">
+               <div className="flex flex-col items-center space-y-6 md:space-y-8">
+                  <div className="h-12 md:h-20 w-[1px] bg-gold/40"></div>
+                  <h2 id="philosophy-title" className="font-black text-[10px] uppercase tracking-[0.5em] md:tracking-[0.7em] text-noir/40 md:text-[14px]">The Philosophy</h2>
                </div>
-               <p className="font-serif text-4xl leading-[0.95] tracking-tighter text-noir text-balance sm:text-6xl md:text-8xl lg:text-9xl">
+               <p className="font-serif text-3xl xs:text-4xl sm:text-6xl md:text-8xl lg:text-9xl leading-[1] md:leading-[0.95] tracking-tighter text-noir text-balance">
                  Representation for <br className="hidden lg:block" /> Significant <span className="italic font-bold text-gold">Architectural Legacy</span>.
                </p>
-               <div className="mx-auto max-w-3xl space-y-8">
-                 <p className="font-serif text-xl italic leading-[1.4] text-noir/80 text-balance md:text-3xl lg:text-4xl">
+               <div className="mx-auto max-w-3xl space-y-6 md:space-y-8">
+                 <p className="font-serif text-lg italic leading-[1.4] text-noir/80 text-balance md:text-3xl lg:text-4xl">
                    Becky Maldeney facilitates the acquisition of DeKalb County's most exclusive estates with surgical precision.
                  </p>
-                 <div className="mx-auto h-px w-24 bg-gold"></div>
+                 <div className="mx-auto h-px w-16 md:w-24 bg-gold"></div>
                </div>
             </div>
           </div>
         </section>
 
-        {/* Portfolio Section */}
+        {/* Portfolio Section - Compact Mobile Typography */}
         <section 
           id="listings" 
           role="region" 
           aria-labelledby="listings-title"
-          className="relative z-10 scroll-mt-24 bg-ivory py-24 md:py-48"
+          className="relative z-10 scroll-mt-24 bg-ivory py-20 md:py-48"
         >
           <div className="container mx-auto px-6">
-            <div className="mb-24 flex flex-col items-start justify-between space-y-8 md:mb-32 md:flex-row md:items-end md:space-y-0">
-               <div className="space-y-6">
-                  <h3 id="listings-title" className="font-serif text-6xl font-bold leading-[0.85] tracking-tighter text-noir md:text-8xl lg:text-[10rem]">The <br className="hidden md:block" /><span className="italic text-gold">Collection.</span></h3>
-                  <p className="font-black text-[12px] uppercase tracking-[0.6em] text-noir/40 md:text-[14px]">Curated Private Inventory</p>
+            <div className="mb-16 md:mb-32 flex flex-col items-start justify-between space-y-6 md:flex-row md:items-end md:space-y-0">
+               <div className="space-y-4 md:space-y-6">
+                  <h3 id="listings-title" className="font-serif text-5xl xs:text-6xl font-bold leading-[0.9] tracking-tighter text-noir md:text-8xl lg:text-[10rem]">The <br className="hidden md:block" /><span className="italic text-gold">Collection.</span></h3>
+                  <p className="font-black text-[10px] uppercase tracking-[0.5em] md:tracking-[0.6em] text-noir/40 md:text-[14px]">Curated Private Inventory</p>
                </div>
                <div className="md:mb-6">
                   <p className="hidden font-serif text-xl italic leading-snug text-noir/60 text-balance md:block md:text-2xl lg:max-w-xs lg:text-right">
@@ -109,7 +107,7 @@ const App: React.FC = () => {
                </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:gap-12 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:gap-12 lg:grid-cols-3">
               {MOCK_PROPERTIES.map(prop => (
                 <PropertyCard 
                   key={prop.id}
@@ -121,28 +119,28 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* Districts Section */}
+        {/* Districts Section - High Contrast Typographic Design */}
         <section 
           id="neighborhoods" 
           role="region" 
           aria-labelledby="districts-title"
-          className="relative z-10 scroll-mt-24 bg-noir py-24 text-white shadow-2xl md:py-48"
+          className="relative z-10 scroll-mt-24 bg-noir py-20 text-white shadow-2xl md:py-48"
         >
           <div className="container mx-auto px-6">
-             <div className="mb-24 flex flex-col items-start justify-between md:mb-32 md:flex-row md:items-end">
-                <div className="space-y-8">
-                    <h3 id="districts-title" className="mb-4 font-serif text-6xl font-bold leading-[0.8] tracking-tighter md:text-9xl lg:text-[12rem]">The <br className="hidden md:block" /><span className="gold-shimmer italic text-gold">Districts.</span></h3>
-                    <p className="font-black text-[12px] uppercase tracking-[0.7em] text-white/40 md:text-[14px]">Strategic Neighborhood Profiles</p>
+             <div className="mb-16 md:mb-32 flex flex-col items-start justify-between md:flex-row md:items-end">
+                <div className="space-y-6 md:space-y-8">
+                    <h3 id="districts-title" className="mb-2 font-serif text-5xl xs:text-6xl font-bold leading-[0.9] tracking-tighter md:text-9xl lg:text-[12rem]">The <br className="hidden md:block" /><span className="gold-shimmer italic text-gold">Districts.</span></h3>
+                    <p className="font-black text-[10px] uppercase tracking-[0.5em] md:tracking-[0.7em] text-white/40 md:text-[14px]">Strategic Neighborhood Profiles</p>
                 </div>
-                <div className="mt-12 flex space-x-6 md:mt-0">
-                   <button onClick={() => scrollNeighborhoods('left')} className="group flex h-16 w-16 items-center justify-center rounded-full border border-white/10 transition-all hover:bg-gold hover:text-noir md:h-24 md:w-24" aria-label="Scroll districts left"><ChevronLeft size={32} className="transition-transform group-hover:-translate-x-1" /></button>
-                   <button onClick={() => scrollNeighborhoods('right')} className="group flex h-16 w-16 items-center justify-center rounded-full border border-white/10 transition-all hover:bg-gold hover:text-noir md:h-24 md:w-24" aria-label="Scroll districts right"><ChevronRight size={32} className="transition-transform group-hover:translate-x-1" /></button>
+                <div className="mt-8 md:mt-0 flex space-x-4 md:space-x-6">
+                   <button onClick={() => scrollNeighborhoods('left')} className="group flex h-14 w-14 items-center justify-center rounded-full border border-white/10 transition-all hover:bg-gold hover:text-noir md:h-24 md:w-24" aria-label="Scroll districts left"><ChevronLeft size={24} className="md:w-8 md:h-8 transition-transform group-hover:-translate-x-1" /></button>
+                   <button onClick={() => scrollNeighborhoods('right')} className="group flex h-14 w-14 items-center justify-center rounded-full border border-white/10 transition-all hover:bg-gold hover:text-noir md:h-24 md:w-24" aria-label="Scroll districts right"><ChevronRight size={24} className="md:w-8 md:h-8 transition-transform group-hover:translate-x-1" /></button>
                 </div>
              </div>
 
-             <div ref={scrollContainerRef} className="hide-scrollbar flex flex-nowrap space-x-12 overflow-x-auto pb-16 snap-x scroll-smooth md:space-x-20">
+             <div ref={scrollContainerRef} className="hide-scrollbar flex flex-nowrap space-x-8 md:space-x-20 overflow-x-auto pb-12 snap-x scroll-smooth">
                 {NEIGHBORHOODS.map(nb => (
-                  <div key={nb.id} className="min-w-[320px] snap-center group cursor-pointer sm:min-w-[500px] md:min-w-[800px]">
+                  <div key={nb.id} className="min-w-[280px] xs:min-w-[320px] snap-center group cursor-pointer sm:min-w-[500px] md:min-w-[800px]">
                     <div className="relative aspect-[16/10] overflow-hidden rounded-sm border border-white/10 transition-all duration-700 group-hover:border-gold/30">
                        <img 
                         src={nb.imageUrl} 
@@ -151,10 +149,10 @@ const App: React.FC = () => {
                         loading="lazy"
                        />
                        <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/10 to-transparent"></div>
-                       <div className="absolute bottom-12 left-12 space-y-4 md:bottom-16 md:left-16">
-                          <p className="font-black text-[12px] uppercase tracking-[0.5em] text-gold md:text-[14px]">{nb.averagePrice}</p>
-                          <h4 className="font-serif text-4xl font-bold leading-none tracking-tighter md:text-7xl">{nb.name}</h4>
-                          <p className="font-serif text-lg italic text-white/60 opacity-0 transition-opacity delay-200 duration-700 group-hover:opacity-100 md:text-2xl">{nb.vibe}</p>
+                       <div className="absolute bottom-6 left-6 right-6 md:bottom-16 md:left-16 space-y-2 md:space-y-4">
+                          <p className="font-black text-[9px] md:text-[14px] uppercase tracking-[0.3em] md:tracking-[0.5em] text-gold">{nb.averagePrice}</p>
+                          <h4 className="font-serif text-3xl xs:text-4xl md:text-7xl font-bold leading-tight md:leading-none tracking-tighter">{nb.name}</h4>
+                          <p className="font-serif text-sm md:text-2xl italic text-white/60 opacity-0 transition-opacity delay-200 duration-700 group-hover:opacity-100">{nb.vibe}</p>
                        </div>
                     </div>
                   </div>
@@ -163,38 +161,38 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* Contact Section */}
+        {/* Contact Section - Responsive Hierarchy */}
         <section 
           id="contact" 
           role="region" 
           aria-labelledby="contact-title"
-          className="relative z-10 bg-white py-24 md:py-48"
+          className="relative z-10 bg-white py-20 md:py-48"
         >
            <div className="container mx-auto px-6">
-              <div className="grid grid-cols-1 items-start gap-24 md:gap-40 lg:grid-cols-2">
-                 <div className="sticky top-40 space-y-16 md:space-y-24">
-                    <div className="space-y-8 md:space-y-12">
-                       <h2 id="contact-title" className="font-serif text-6xl font-bold leading-[0.85] tracking-tighter text-noir md:text-8xl lg:text-9xl">Private <br className="hidden md:block" /><span className="gold-shimmer italic text-gold">Consultation.</span></h2>
-                       <div className="max-w-lg space-y-6">
-                          <p className="font-serif text-xl italic leading-relaxed text-noir/70 text-balance md:text-3xl">
+              <div className="grid grid-cols-1 items-start gap-16 md:gap-40 lg:grid-cols-2">
+                 <div className="lg:sticky lg:top-40 space-y-12 md:space-y-24">
+                    <div className="space-y-6 md:space-y-12">
+                       <h2 id="contact-title" className="font-serif text-5xl xs:text-6xl font-bold leading-[0.9] tracking-tighter text-noir md:text-8xl lg:text-9xl">Private <br className="hidden md:block" /><span className="gold-shimmer italic text-gold">Consultation.</span></h2>
+                       <div className="max-w-lg space-y-4 md:space-y-6">
+                          <p className="font-serif text-lg md:text-3xl italic leading-relaxed text-noir/70 text-balance">
                             Exclusivity is our standard. Our team facilitates high-value acquisitions with absolute discretion.
                           </p>
-                          <div className="h-[1px] w-20 bg-gold"></div>
+                          <div className="h-[1px] w-12 md:w-20 bg-gold"></div>
                        </div>
                     </div>
-                    <div className="space-y-10 md:space-y-14">
-                       <div className="group flex cursor-pointer items-center space-x-8">
-                          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-noir text-white shadow-xl transition-all group-hover:bg-gold group-hover:text-noir md:h-20 md:w-20"><Phone size={24}/></div>
+                    <div className="space-y-8 md:space-y-14">
+                       <div className="group flex cursor-pointer items-center space-x-6 md:space-x-8">
+                          <div className="flex h-14 w-14 md:h-20 md:w-20 items-center justify-center rounded-full bg-noir text-white shadow-xl transition-all group-hover:bg-gold group-hover:text-noir"><Phone size={20} className="md:w-6 md:h-6"/></div>
                           <div className="flex flex-col">
-                            <span className="font-black text-[10px] uppercase tracking-[0.4em] text-noir/30">Direct Line</span>
-                            <a href={`tel:${AGENT_INFO.phone}`} className="text-2xl font-bold uppercase tracking-widest text-noir transition-colors hover:text-gold md:text-4xl">{AGENT_INFO.phone}</a>
+                            <span className="font-black text-[9px] uppercase tracking-[0.3em] text-noir/30">Direct Line</span>
+                            <a href={`tel:${AGENT_INFO.phone}`} className="text-xl md:text-4xl font-bold uppercase tracking-widest text-noir transition-colors hover:text-gold">{AGENT_INFO.phone}</a>
                           </div>
                        </div>
-                       <div className="group flex cursor-pointer items-center space-x-8">
-                          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-noir text-white shadow-xl transition-all group-hover:bg-gold group-hover:text-noir md:h-20 md:w-20"><Mail size={24}/></div>
+                       <div className="group flex cursor-pointer items-center space-x-6 md:space-x-8">
+                          <div className="flex h-14 w-14 md:h-20 md:w-20 items-center justify-center rounded-full bg-noir text-white shadow-xl transition-all group-hover:bg-gold group-hover:text-noir"><Mail size={20} className="md:w-6 md:h-6"/></div>
                           <div className="flex flex-col">
-                             <span className="font-black text-[10px] uppercase tracking-[0.4em] text-noir/30">Secure Email</span>
-                             <a href={`mailto:${AGENT_INFO.email}`} className="text-2xl font-bold leading-none tracking-tight text-noir transition-colors hover:text-gold text-balance md:text-3xl">{AGENT_INFO.email}</a>
+                             <span className="font-black text-[9px] uppercase tracking-[0.3em] text-noir/30">Secure Email</span>
+                             <a href={`mailto:${AGENT_INFO.email}`} className="text-xl md:text-3xl font-bold leading-none tracking-tight text-noir transition-colors hover:text-gold break-all">{AGENT_INFO.email}</a>
                           </div>
                        </div>
                     </div>
@@ -205,43 +203,43 @@ const App: React.FC = () => {
         </section>
       </main>
 
-      <footer className="relative z-10 border-t border-white/5 bg-noir py-24 md:py-40 text-white">
+      <footer className="relative z-10 border-t border-white/5 bg-noir py-16 md:py-40 text-white">
          <div className="container mx-auto px-6">
-            <div className="flex flex-col items-start justify-between space-y-20 lg:flex-row lg:space-y-0">
-               <div className="space-y-12">
-                  <div className="font-serif text-5xl font-black tracking-tighter md:text-6xl">BM<span className="text-gold">.</span></div>
-                  <div className="space-y-4">
-                    <p className="font-sans font-bold text-[12px] uppercase leading-relaxed tracking-[0.5em] text-white/60 md:text-[14px]">
+            <div className="flex flex-col items-start justify-between space-y-16 lg:flex-row lg:space-y-0">
+               <div className="space-y-8 md:space-y-12">
+                  <div className="font-serif text-4xl md:text-6xl font-black tracking-tighter">BM<span className="text-gold">.</span></div>
+                  <div className="space-y-3 md:space-y-4">
+                    <p className="font-sans font-bold text-[11px] md:text-[14px] uppercase leading-relaxed tracking-[0.4em] md:tracking-[0.5em] text-white/60">
                       {AGENT_INFO.business}
                     </p>
-                    <p className="font-sans font-medium text-[11px] uppercase tracking-[0.4em] text-white/30">
+                    <p className="font-sans font-medium text-[10px] uppercase tracking-[0.3em] text-white/30">
                       {AGENT_INFO.office}
                     </p>
                   </div>
                </div>
-               <div className="grid grid-cols-2 gap-24 md:gap-40">
-                  <div className="space-y-10 md:space-y-12">
-                    <p className="font-black text-[12px] uppercase tracking-[0.6em] text-gold md:text-[14px]">Access</p>
-                    <nav className="flex flex-col space-y-6">
-                      <button onClick={() => scrollToSection('listings')} className="font-black text-[11px] uppercase tracking-[0.4em] text-white/40 transition-all hover:text-white text-left">The Portfolio</button>
-                      <button onClick={() => scrollToSection('neighborhoods')} className="font-black text-[11px] uppercase tracking-[0.4em] text-white/40 transition-all hover:text-white text-left">Districts</button>
-                      <button onClick={() => scrollToSection('contact')} className="font-black text-[11px] uppercase tracking-[0.4em] text-white/40 transition-all hover:text-white text-left">Consultation</button>
+               <div className="grid grid-cols-2 gap-12 xs:gap-24 md:gap-40">
+                  <div className="space-y-8 md:space-y-12">
+                    <p className="font-black text-[11px] md:text-[14px] uppercase tracking-[0.5em] md:tracking-[0.6em] text-gold">Access</p>
+                    <nav className="flex flex-col space-y-4 md:space-y-6">
+                      <button onClick={() => scrollToSection('listings')} className="font-black text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-white/40 transition-all hover:text-white text-left">The Portfolio</button>
+                      <button onClick={() => scrollToSection('neighborhoods')} className="font-black text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-white/40 transition-all hover:text-white text-left">Districts</button>
+                      <button onClick={() => scrollToSection('contact')} className="font-black text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-white/40 transition-all hover:text-white text-left">Consultation</button>
                     </nav>
                   </div>
-                  <div className="space-y-10 md:space-y-12">
-                    <p className="font-black text-[12px] uppercase tracking-[0.6em] text-gold md:text-[14px]">Profiles</p>
-                    <nav className="flex flex-col space-y-6">
-                      <a href="#" className="font-black text-[11px] uppercase tracking-[0.4em] text-white/40 transition-all hover:text-white">Instagram</a>
-                      <a href="#" className="font-black text-[11px] uppercase tracking-[0.4em] text-white/40 transition-all hover:text-white">LinkedIn</a>
+                  <div className="space-y-8 md:space-y-12">
+                    <p className="font-black text-[11px] md:text-[14px] uppercase tracking-[0.5em] md:tracking-[0.6em] text-gold">Profiles</p>
+                    <nav className="flex flex-col space-y-4 md:space-y-6">
+                      <a href="#" className="font-black text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-white/40 transition-all hover:text-white">Instagram</a>
+                      <a href="#" className="font-black text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-white/40 transition-all hover:text-white">LinkedIn</a>
                     </nav>
                   </div>
                </div>
             </div>
-            <div className="mt-32 flex flex-col items-center justify-between space-y-8 border-t border-white/5 pt-16 font-black text-[11px] uppercase tracking-[0.4em] text-white/20 md:flex-row md:space-y-0">
-               <p>© {new Date().getFullYear()} Becky Maldeney • Indiana Real Estate Inc.</p>
-               <div className="flex items-center space-x-12">
-                  <span className="flex items-center"><Home size={14} className="mr-4 text-gold/40"/> Equal Housing Opportunity</span>
-                  <span className="rounded-sm border border-gold/20 px-4 py-1.5 text-gold/60">REALTOR®</span>
+            <div className="mt-20 md:mt-32 flex flex-col items-center justify-between space-y-6 border-t border-white/5 pt-12 md:pt-16 font-black text-[9px] md:text-[11px] uppercase tracking-[0.3em] text-white/20 md:flex-row md:space-y-0">
+               <p className="text-center md:text-left">© {new Date().getFullYear()} Becky Maldeney • Indiana Real Estate Inc.</p>
+               <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-12">
+                  <span className="flex items-center"><Home size={12} className="mr-3 text-gold/40"/> Equal Housing Opportunity</span>
+                  <span className="rounded-sm border border-gold/20 px-3 py-1 text-gold/60">REALTOR®</span>
                </div>
             </div>
          </div>

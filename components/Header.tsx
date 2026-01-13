@@ -46,7 +46,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
           {/* Brand Identity */}
           <button 
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="flex items-center space-x-3 group"
+            className="flex items-center space-x-3 group outline-none"
             aria-label="Indiana Real Estate Home"
           >
             <div className={`font-serif text-xl md:text-3xl font-black tracking-tighter transition-colors ${isScrolled ? 'text-noir' : 'text-white'}`}>
@@ -58,13 +58,13 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
             </div>
           </button>
 
-          {/* Navigation Registry */}
-          <nav role="navigation" className="hidden lg:flex items-center space-x-10">
+          {/* Desktop Navigation Registry */}
+          <nav role="navigation" className="hidden lg:flex items-center space-x-8 xl:space-x-12">
             {NAV_LINKS.map((link) => (
               <button 
                 key={link.id} 
                 onClick={() => handleNavClick(link.id)}
-                className={`text-[11px] font-bold uppercase tracking-[0.3em] transition-all hover:text-gold ${
+                className={`text-[11px] font-bold uppercase tracking-[0.25em] transition-all hover:text-gold py-2 leading-relaxed whitespace-nowrap ${
                   isScrolled ? 'text-noir/60' : 'text-white/80'
                 }`}
               >
@@ -77,7 +77,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
           <div className="flex items-center space-x-4 md:space-x-8">
             <button 
               onClick={() => onNavigate('contact')}
-              className={`hidden sm:flex items-center space-x-2 text-[10px] font-black uppercase tracking-[0.2em] px-6 py-3 rounded-sm transition-all ${
+              className={`hidden sm:flex items-center space-x-2 text-[10px] font-black uppercase tracking-[0.2em] px-6 py-3 rounded-sm transition-all shadow-sm active:scale-95 ${
                 isScrolled 
                   ? 'bg-noir text-white hover:bg-gold hover:text-noir' 
                   : 'bg-white text-noir hover:bg-gold'
@@ -88,7 +88,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
 
             <button 
               onClick={() => setIsMenuOpen(true)}
-              className={`transition-colors p-2 ${isScrolled ? 'text-noir' : 'text-white'}`}
+              className={`transition-colors p-2 hover:text-gold active:scale-90 ${isScrolled ? 'text-noir' : 'text-white'}`}
               aria-label="Open Navigation Menu"
               aria-expanded={isMenuOpen}
             >
@@ -98,48 +98,54 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
         </div>
       </header>
 
-      {/* Persistent Full-Screen Navigation Overlay - Decoupled from Header Flow */}
+      {/* Persistent Full-Screen Navigation Overlay */}
       <div 
         aria-hidden={!isMenuOpen}
-        className={`fixed inset-0 w-full h-full bg-noir transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] transform z-[1000] ${
+        className={`fixed inset-0 w-screen h-screen bg-[#0F0F0F] transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] transform z-[9999] ${
           isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'
         }`}
       >
         {/* Overlay Header */}
-        <div className="w-full px-6 py-8 md:px-12 flex justify-between items-center bg-noir">
+        <div className="w-full px-6 py-8 md:px-12 flex justify-between items-center">
            <div className="font-serif text-3xl font-black text-white">BM<span className="text-gold">.</span></div>
            <button 
             onClick={() => setIsMenuOpen(false)} 
-            className="text-white p-3 hover:rotate-90 transition-transform active:scale-75"
+            className="text-white p-3 hover:rotate-90 transition-transform active:scale-75 outline-none"
             aria-label="Close Navigation Menu"
            >
             <X size={32} />
            </button>
         </div>
         
-        {/* Navigation Content */}
-        <div className="flex flex-col items-center justify-center h-[calc(100vh-100px)] space-y-8 md:space-y-12 px-6 overflow-y-auto">
-          <div className="flex flex-col items-center space-y-6 md:space-y-10">
-            {NAV_LINKS.map((link) => (
-              <button 
+        {/* Navigation Content - Increased leading to prevent clipping of large serifs */}
+        <div className="flex flex-col items-center justify-center h-[calc(100vh-140px)] space-y-4 md:space-y-6 px-6 overflow-y-auto overflow-x-hidden">
+          <nav className="flex flex-col items-center">
+            {NAV_LINKS.map((link, index) => (
+              <div 
                 key={link.id} 
-                onClick={() => handleNavClick(link.id)}
-                className="text-4xl xs:text-5xl md:text-8xl font-serif text-white hover:text-gold transition-all tracking-tighter group flex items-center"
+                className={`transition-all duration-700 delay-[${index * 100}ms] transform ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
               >
-                <span className="opacity-0 group-hover:opacity-100 transition-opacity text-gold text-2xl mr-4 md:mr-8 hidden xs:inline">/</span>
-                {link.name}
-              </button>
+                <button 
+                  onClick={() => handleNavClick(link.id)}
+                  className="relative text-5xl xs:text-6xl md:text-8xl font-serif text-white hover:text-gold transition-all tracking-tighter group flex flex-col items-center leading-[1.4] py-3 md:py-4 outline-none whitespace-nowrap"
+                >
+                  <span className="relative">
+                    {link.name}
+                    <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-gold transition-all duration-500 group-hover:w-full"></span>
+                  </span>
+                </button>
+              </div>
             ))}
-          </div>
+          </nav>
           
-          <div className="w-full max-w-sm pt-8 md:pt-12 mt-4 md:mt-12 border-t border-white/5 space-y-6 md:space-y-8 pb-12">
+          <div className={`w-full max-w-sm pt-8 md:pt-12 mt-4 md:mt-8 border-t border-white/5 space-y-6 md:space-y-8 pb-12 transition-all duration-1000 delay-500 transform ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
              <a href={`tel:${AGENT_INFO.phone}`} className="flex items-center justify-center space-x-4 text-gold text-[11px] font-black uppercase tracking-[0.4em] group active:scale-95 transition-transform">
                <Phone size={18} className="group-hover:rotate-12 transition-transform" />
                <span>Concierge Hotline</span>
              </a>
              <button 
               onClick={() => handleNavClick('contact')}
-              className="w-full bg-gold text-noir py-5 md:py-7 text-[10px] md:text-[11px] font-black uppercase tracking-[0.6em] rounded-sm hover:bg-white transition-all shadow-[0_20px_40px_rgba(0,0,0,0.4)] active:scale-[0.98]"
+              className="w-full bg-gold text-noir py-5 md:py-7 text-[10px] md:text-[11px] font-black uppercase tracking-[0.6em] rounded-sm hover:bg-white transition-all shadow-2xl active:scale-[0.98]"
              >
                Request Private Brief
              </button>
